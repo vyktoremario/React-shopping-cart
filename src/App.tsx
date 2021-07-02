@@ -11,6 +11,7 @@ import Badge from "@material-ui/core/Badge";
 
 //Styles
 import { Wrapper, StyledButton } from "./App.styles";
+import Navbar from "./Navbar/Navbar";
 
 export type CartItemTypes = {
   id: number;
@@ -69,27 +70,34 @@ const App = () => {
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Somethig went wrong</div>;
   return (
-    <Wrapper>
-      <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        <Cart
-          cartItems={cartItems}
-          addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
-        />
-      </Drawer>
-      <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItem(cartItems)} color="error">
-          <AddShoppingCartIcon color="primary" fontSize="large"/>
-        </Badge>
-      </StyledButton>
-      <Grid container spacing={8}>
-        {data?.map((item) => (
-          <Grid item key={item.id} xs={12} sm={4}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
-          </Grid>
-        ))}
-      </Grid>
-    </Wrapper>
+    <>
+      <Navbar />
+      <Wrapper>
+        <Drawer
+          anchor="right"
+          open={cartOpen}
+          onClose={() => setCartOpen(false)}
+        >
+          <Cart
+            cartItems={cartItems}
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+          />
+        </Drawer>
+        <StyledButton onClick={() => setCartOpen(true)}>
+          <Badge badgeContent={getTotalItem(cartItems)} color="error">
+            <AddShoppingCartIcon color="primary" fontSize="large" />
+          </Badge>
+        </StyledButton>
+        <Grid container spacing={8}>
+          {data?.map((item) => (
+            <Grid item key={item.id} xs={12} sm={4}>
+              <Item item={item} handleAddToCart={handleAddToCart} />
+            </Grid>
+          ))}
+        </Grid>
+      </Wrapper>
+    </>
   );
 };
 
